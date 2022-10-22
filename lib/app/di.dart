@@ -1,6 +1,4 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
-
-import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mvvm_demo/app/app_prefs.dart';
 import 'package:mvvm_demo/data/data_source/remote_data_source.dart';
@@ -23,8 +21,7 @@ Future<void> initAppModule() async {
   instance.registerLazySingleton<AppPreferences>(
       () => AppPreferences(instance<SharedPreferences>()));
   //network info
-  instance.registerLazySingleton<NetworkInfo>(
-      () => NetworkInfoImpl(DataConnectionChecker()));
+  instance.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl());
   //dio factory
   instance.registerLazySingleton<DioFactory>(() => DioFactory(instance()));
   //app service
