@@ -6,7 +6,7 @@ import 'package:mvvm_demo/core/utils/color_manager.dart';
 import 'package:mvvm_demo/core/utils/images_manager.dart';
 import 'package:mvvm_demo/core/utils/string_manager.dart';
 import 'package:mvvm_demo/core/utils/value_manager.dart';
-import 'package:mvvm_demo/domain/model.dart';
+import 'package:mvvm_demo/domain/model/model.dart';
 import 'package:mvvm_demo/presentation/onboarding/onboarding_viewmodel.dart';
 
 class OnboardingView extends StatefulWidget {
@@ -36,6 +36,7 @@ class OnboardingViewState extends State<OnboardingView> {
     // ignore: todo
     // TODO: implement dispose
     _viewModel.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 

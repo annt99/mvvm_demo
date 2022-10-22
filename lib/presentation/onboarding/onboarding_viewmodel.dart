@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:mvvm_demo/core/utils/images_manager.dart';
 import 'package:mvvm_demo/core/utils/string_manager.dart';
-import 'package:mvvm_demo/domain/model.dart';
+import 'package:mvvm_demo/domain/model/model.dart';
 import 'package:mvvm_demo/presentation/base/base_viewmodel.dart';
 
 class OnboardingViewModel extends BaseViewModel
