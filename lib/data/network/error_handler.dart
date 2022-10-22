@@ -110,7 +110,7 @@ extension DataSourceExtension on DataSource {
       case DataSource.NO_INTERNET_CONNECTION:
         return Failure(ResponseCode.NO_INTERNET_CONNECTION,
             ResponseMessage.NO_INTERNET_CONNECTION);
-      default:
+      case DataSource.DEFAULT:
         return Failure(ResponseCode.UNKNOWN, ResponseMessage.UNKNOWN);
     }
   }
@@ -142,9 +142,10 @@ class ResponseMessage {
   static const String UNAUTHORIED = "User is unauthorised, try agian";
   static const String NOT_FOUND = "Url is not found, try again";
   static const String INTERNAL_SERVER_ERROR =
-      "Something when wrong, try again later";
+      "Something when wrong, try again later : INTERNAL_SERVER_ERROR";
 
-  static const String UNKNOWN = "Something when wrong, try again later";
+  static const String UNKNOWN =
+      "Something when wrong, try again later: UNKNOWN";
   static const String CONNECT_TIMEOUT = "Timeout error, try again later";
   static const String CANCEL = "Request was cancelled, try again later";
   static const String RECIEVE_TIMEOUT = "Timeout error, try again later";

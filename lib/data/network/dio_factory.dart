@@ -19,7 +19,7 @@ class DioFactory {
   Future<Dio> getDio() async {
     Dio dio = Dio();
 
-    int timeOut = 10 * 1000; //10s
+    int timeOut = 60 * 1000; //1 minutes
     String language = await _appPreferences.getAppLanguage();
     Map<String, String> headers = {
       CONTENT_TYPE: APPLICATION_JSON,

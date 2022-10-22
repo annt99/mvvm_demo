@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm_demo/app/app_prefs.dart';
-import 'package:mvvm_demo/app/di.dart';
 import 'package:mvvm_demo/core/route/route_manager.dart';
 import 'package:mvvm_demo/core/theme/theme_manager.dart';
 
@@ -16,8 +14,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final AppPreferences _appPreferences = instance<AppPreferences>();
-
   @override
   void didChangeDependencies() {
     // _appPreferences.getLocal().then((local) => {context.setLocale(local)});

@@ -5,10 +5,6 @@ import 'package:mvvm_demo/core/utils/color_manager.dart';
 import 'package:mvvm_demo/core/utils/images_manager.dart';
 import 'package:mvvm_demo/core/utils/string_manager.dart';
 import 'package:mvvm_demo/core/utils/value_manager.dart';
-import 'package:mvvm_demo/data/data_source/remote_data_source.dart';
-import 'package:mvvm_demo/data/repository/repository_impl.dart';
-import 'package:mvvm_demo/domain/repository/repository.dart';
-import 'package:mvvm_demo/domain/usecase/login_usecase.dart';
 import 'package:mvvm_demo/presentation/login/login_viewmodel.dart';
 
 class LoginView extends StatefulWidget {
