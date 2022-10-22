@@ -4,7 +4,7 @@
 
 import 'package:mvvm_demo/app/extensions.dart';
 import 'package:mvvm_demo/data/response/responses.dart';
-import 'package:mvvm_demo/domain/model.dart';
+import 'package:mvvm_demo/domain/model/model.dart';
 
 const EMPTY = "";
 
