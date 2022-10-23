@@ -48,7 +48,7 @@ class _LoginViewState extends State<LoginView> {
                     Image.asset(ImageAssets.splashImage),
                     const SizedBox(height: AppSize.s28),
                     //username
-                    StreamBuilder<bool>(
+                    StreamBuilder<String?>(
                       stream: _viewModel.outputIsUsernameValid,
                       builder: ((context, snapshot) {
                         return TextFormField(
@@ -59,15 +59,15 @@ class _LoginViewState extends State<LoginView> {
                               hintText: AppStrings.username,
                               labelText: AppStrings.username,
                               errorMaxLines: 1,
-                              errorText: (snapshot.data ?? true)
+                              errorText: (snapshot.data == null)
                                   ? null
-                                  : AppStrings.usernameError),
+                                  : snapshot.data),
                         );
                       }),
                     ),
                     const SizedBox(height: AppSize.s12),
                     //password
-                    StreamBuilder<bool>(
+                    StreamBuilder<String?>(
                       stream: _viewModel.outputIsPasswordValid,
                       builder: ((context, snapshot) {
                         return TextFormField(
@@ -77,9 +77,9 @@ class _LoginViewState extends State<LoginView> {
                               helperText: '',
                               hintText: AppStrings.password,
                               labelText: AppStrings.password,
-                              errorText: (snapshot.data ?? true)
+                              errorText: (snapshot.data == null)
                                   ? null
-                                  : AppStrings.passwordError),
+                                  : snapshot.data),
                         );
                       }),
                     ),
@@ -129,7 +129,9 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return _getContentWith();
+    return GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: _getContentWith());
   }
 
   @override

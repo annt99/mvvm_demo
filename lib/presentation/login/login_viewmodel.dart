@@ -18,7 +18,7 @@ class LoginViewModel extends BaseViewModel
 
   var loginObject = LoginObject("", "");
 
-  final LoginUseCase _loginUseCase; //todo: remove ?
+  final LoginUseCase _loginUseCase;
 
   LoginViewModel(this._loginUseCase);
 
@@ -57,12 +57,12 @@ class LoginViewModel extends BaseViewModel
   }
 
   @override
-  Stream<bool> get outputIsPasswordValid => _passwordStreamController.stream
-      .map((password) => _isPasswordValid(password));
+  Stream<String?> get outputIsPasswordValid => _passwordStreamController.stream
+      .map((password) => validatePassword(password));
 
   @override
-  Stream<bool> get outputIsUsernameValid => _usernameStreamController.stream
-      .map((username) => _isUsernameValid(username));
+  Stream<String?> get outputIsUsernameValid => _usernameStreamController.stream
+      .map((username) => validateEmail(username));
   @override
   Stream<bool> get outputIsAllInputValid =>
       _isAllInputValidController.stream.map((event) => _isAllInputValid());
@@ -85,6 +85,33 @@ class LoginViewModel extends BaseViewModel
     inputIsAllInput.add(null);
   }
 
+  String? validateEmail(String value) {
+    RegExp regex = RegExp(
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    if (value.isEmpty) {
+      return 'Please enter Email';
+    } else {
+      if (!regex.hasMatch(value)) {
+        return 'Email is valid';
+      } else {
+        return null;
+      }
+    }
+  }
+
+  String? validatePassword(String value) {
+    RegExp regex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
+    if (value.isEmpty) {
+      return 'Please enter password';
+    } else {
+      if (!regex.hasMatch(value)) {
+        return 'Password must contain [A-Z][a-z][0-9]';
+      } else {
+        return null;
+      }
+    }
+  }
+
   bool _isPasswordValid(String password) {
     return password.isNotEmpty;
   }
@@ -95,7 +122,9 @@ class LoginViewModel extends BaseViewModel
 
   bool _isAllInputValid() {
     return _isPasswordValid(loginObject.password) &&
-        _isUsernameValid(loginObject.username);
+        _isUsernameValid(loginObject.username) &&
+        validateEmail(loginObject.username) == null &&
+        validatePassword(loginObject.password) == null;
   }
 }
 
@@ -111,7 +140,7 @@ abstract class LoginViewModelInputs {
 }
 
 abstract class LoginViewModelOutputs {
-  Stream<bool> get outputIsUsernameValid;
-  Stream<bool> get outputIsPasswordValid;
+  Stream<String?> get outputIsUsernameValid;
+  Stream<String?> get outputIsPasswordValid;
   Stream<bool> get outputIsAllInputValid;
 }
