@@ -5,6 +5,8 @@ import 'dart:async';
 import 'package:mvvm_demo/domain/usecase/login_usecase.dart';
 import 'package:mvvm_demo/presentation/base/base_viewmodel.dart';
 import 'package:mvvm_demo/presentation/common/freezed_data_classes.dart';
+import 'package:mvvm_demo/presentation/common/state_renderer/state_renderer.dart';
+import 'package:mvvm_demo/presentation/common/state_renderer/state_renderer_imp.dart';
 
 class LoginViewModel extends BaseViewModel
     with LoginViewModelInputs, LoginViewModelOutputs {
@@ -30,7 +32,9 @@ class LoginViewModel extends BaseViewModel
   }
 
   @override
-  void start() {}
+  void start() {
+    inputState.add(ContentState());
+  }
 
   @override
   Sink get inputPassword => _passwordStreamController.sink;
@@ -43,15 +47,18 @@ class LoginViewModel extends BaseViewModel
 
   @override
   login() async {
+    inputState.add(
+        LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
     (await _loginUseCase.execute(
             LoginUseCaseInput(loginObject.username, loginObject.password)))
         .fold(
             (failure) => {
-                  print(failure.message)
+                  inputState.add(ErrorState(
+                      StateRendererType.POPUP_ERROR_STATE, failure.message))
                   //failure
                 },
             (data) => {
-                  print(data.customer?.name)
+                  inputState.add(ContentState())
                   //success
                 });
   }
