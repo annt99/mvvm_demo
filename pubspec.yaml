@@ -49,6 +49,7 @@ dependencies:
   freezed: ^2.2.0
   json_annotation: ^4.7.0
   get_it: ^7.2.0
+  lottie: ^1.4.3
 
 dev_dependencies:
   flutter_test:
@@ -85,7 +86,9 @@ flutter:
     - assets/images/arrow-right.svg
     - assets/images/dot-no-fill.svg
     - assets/images/dot.svg
-
+    - assets/json/empty.json
+    - assets/json/error.json
+    - assets/json/loading.json
   fonts:
     - family: Montserrat
       fonts:
