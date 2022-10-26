@@ -1,10 +1,6 @@
 // ignore_for_file: constant_identifier_names
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mvvm_demo/core/utils/color_manager.dart';
 import 'package:mvvm_demo/core/utils/font_manager.dart';
 import 'package:mvvm_demo/core/utils/images_manager.dart';
 import 'package:mvvm_demo/core/utils/string_manager.dart';
@@ -17,6 +13,7 @@ enum StateRendererType {
   //POPUP
   POPUP_LOADING_STATE,
   POPUP_ERROR_STATE,
+  POPUP_SUCCESS_STATE,
   //Full Screen
   FULL_SCREEN_LOADING_STATE,
   FULL_SCREEN_ERROR_STATE,
@@ -26,12 +23,12 @@ enum StateRendererType {
 }
 
 class StateRender extends StatelessWidget {
-  StateRendererType stateRendererType;
-  String message;
-  String title;
-  Function? retryActionFuntion;
+  final StateRendererType stateRendererType;
+  final String message;
+  final String title;
+  final Function? retryActionFuntion;
 
-  StateRender(
+  const StateRender(
       {Key? key,
       required this.stateRendererType,
       Failure? failure,
@@ -49,30 +46,44 @@ class StateRender extends StatelessWidget {
 
   Widget _getStateWidget(BuildContext context) {
     switch (stateRendererType) {
+      //POPUP LOADING
       case StateRendererType.POPUP_LOADING_STATE:
         return _getPopupDialog(
             context, [_getAnimateImage(JsonAssets.loadingJson)]);
+      //POPUP ERROR
       case StateRendererType.POPUP_ERROR_STATE:
         return _getPopupDialog(context, [
           _getAnimateImage(JsonAssets.errorJson),
           _getMessage(message),
           _getRetryButton(AppStrings.ok, context)
         ]);
+      case StateRendererType.POPUP_SUCCESS_STATE:
+        return _getPopupDialog(context, [
+          _getAnimateImage(JsonAssets.successJson),
+          _getMessage(message),
+          _getRetryButton(AppStrings.ok, context)
+        ]);
+      //FULL SCREEN LOADING
       case StateRendererType.FULL_SCREEN_LOADING_STATE:
-        return _getWidgetColumn(
-            [_getAnimateImage(JsonAssets.loadingJson), _getMessage(message)]);
+        return _getWidgetColumn([
+          _getAnimateImage(JsonAssets.loadingJson),
+          _getMessage(message),
+        ]);
+      //FULL SCREEN ERROR
       case StateRendererType.FULL_SCREEN_ERROR_STATE:
         return _getWidgetColumn([
           _getAnimateImage(JsonAssets.errorJson),
           _getMessage(message),
           _getRetryButton(AppStrings.retryAgain, context)
         ]);
-
+      // CONTENT SCREEN
       case StateRendererType.CONTENT_SCREEN_STATE:
         return Container();
+      // EMPTY SCREEN
       case StateRendererType.EMPTY_SCREEN_STATE:
         return _getWidgetColumn(
             [_getAnimateImage(JsonAssets.emptyJson), _getMessage(message)]);
+
       default:
         return Container();
     }
@@ -92,6 +103,7 @@ class StateRender extends StatelessWidget {
         padding: const EdgeInsets.all(AppPadding.p18),
         child: Text(
           message,
+          textAlign: TextAlign.center,
           style: getMediumStyle(
               color: Colors.white, fontSize: FontSizeManager.s16),
         ),

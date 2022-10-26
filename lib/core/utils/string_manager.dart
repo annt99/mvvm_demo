@@ -14,13 +14,18 @@ class AppStrings {
       "Tut app is an awesome flutter application using clean architecture #4";
   static const String skip = "Skip";
   static const String username = "Username";
-  static const String usernameError = "Username is wrong";
+  static const String email = "email";
+  static const String usernameError = 'Email is valid';
   static const String password = "Password";
-  static const String passwordError = "Password is wrong";
+  static const String passwordError = 'Password must contain [A-Z][a-z][0-9]';
   static const String login = "Login";
+  static const String resetPassword = "Reset Password";
   static const String forgetPassword = "Forget password";
   static const String registerText = "Not a member ? Sign up";
   static const String loading = "Loading...";
   static const String retryAgain = "Retry Again";
   static const String ok = "OK";
+  static const String isPasswordEmpty = "Please enter password";
+  static const String isEmailEmpty = "Please enter email";
+  static const String resendTitle = "Didn't recive email ? Resend ";
 }

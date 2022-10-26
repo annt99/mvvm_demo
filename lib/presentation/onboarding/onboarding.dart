@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mvvm_demo/app/app_prefs.dart';
+import 'package:mvvm_demo/app/di.dart';
 import 'package:mvvm_demo/core/route/route_manager.dart';
 import 'package:mvvm_demo/core/utils/color_manager.dart';
 import 'package:mvvm_demo/core/utils/images_manager.dart';
@@ -18,8 +20,10 @@ class OnboardingView extends StatefulWidget {
 class OnboardingViewState extends State<OnboardingView> {
   final PageController _pageController = PageController(initialPage: 0);
   final OnboardingViewModel _viewModel = OnboardingViewModel();
+  final AppPreferences _appPreferences = instance<AppPreferences>();
 
   _bind() {
+    _appPreferences.setOnBoardingScreenViewed();
     _viewModel.start();
   }
 
