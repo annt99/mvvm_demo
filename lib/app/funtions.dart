@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:device_info/device_info.dart';
 import 'package:flutter/services.dart';
+import 'package:mvvm_demo/core/utils/string_manager.dart';
 import 'package:mvvm_demo/domain/model/model.dart';
 
 Future<DeviceInfo> getDeviceDetails() async {
@@ -25,4 +26,18 @@ Future<DeviceInfo> getDeviceDetails() async {
     return DeviceInfo(name, identifier, version);
   }
   return DeviceInfo(name, identifier, version);
+}
+
+String? validateEmail(String value) {
+  RegExp regex = RegExp(
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+  if (value.isEmpty) {
+    return AppStrings.isEmailEmpty;
+  } else {
+    if (!regex.hasMatch(value)) {
+      return AppStrings.usernameError;
+    } else {
+      return null;
+    }
+  }
 }

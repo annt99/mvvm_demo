@@ -2,6 +2,8 @@
 
 import 'dart:async';
 
+import 'package:mvvm_demo/app/funtions.dart';
+import 'package:mvvm_demo/core/utils/string_manager.dart';
 import 'package:mvvm_demo/domain/usecase/login_usecase.dart';
 import 'package:mvvm_demo/presentation/base/base_viewmodel.dart';
 import 'package:mvvm_demo/presentation/common/freezed_data_classes.dart';
@@ -18,6 +20,9 @@ class LoginViewModel extends BaseViewModel
   final StreamController _isAllInputValidController =
       StreamController<void>.broadcast();
 
+  final StreamController isLoginSuccessStreamController =
+      StreamController<bool>();
+
   var loginObject = LoginObject("", "");
 
   final LoginUseCase _loginUseCase;
@@ -28,7 +33,8 @@ class LoginViewModel extends BaseViewModel
   void dispose() {
     _usernameStreamController.close();
     _passwordStreamController.close();
-    inputIsAllInput.close();
+    _isAllInputValidController.close();
+    isLoginSuccessStreamController.close();
   }
 
   @override
@@ -58,7 +64,8 @@ class LoginViewModel extends BaseViewModel
                   //failure
                 },
             (data) => {
-                  inputState.add(ContentState())
+                  inputState.add(ContentState()),
+                  isLoginSuccessStreamController.add(true)
                   //success
                 });
   }
@@ -92,27 +99,13 @@ class LoginViewModel extends BaseViewModel
     inputIsAllInput.add(null);
   }
 
-  String? validateEmail(String value) {
-    RegExp regex = RegExp(
-        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-    if (value.isEmpty) {
-      return 'Please enter Email';
-    } else {
-      if (!regex.hasMatch(value)) {
-        return 'Email is valid';
-      } else {
-        return null;
-      }
-    }
-  }
-
   String? validatePassword(String value) {
     RegExp regex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
     if (value.isEmpty) {
-      return 'Please enter password';
+      return AppStrings.isPasswordEmpty;
     } else {
       if (!regex.hasMatch(value)) {
-        return 'Password must contain [A-Z][a-z][0-9]';
+        return AppStrings.passwordError;
       } else {
         return null;
       }

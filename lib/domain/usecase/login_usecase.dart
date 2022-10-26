@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:mvvm_demo/app/funtions.dart';
 import 'package:mvvm_demo/data/network/failure.dart';
 import 'package:dartz/dartz.dart';
