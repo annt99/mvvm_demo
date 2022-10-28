@@ -9,8 +9,10 @@ import 'package:mvvm_demo/data/repository/repository_impl.dart';
 import 'package:mvvm_demo/domain/repository/repository.dart';
 import 'package:mvvm_demo/domain/usecase/forgot_password_usecase.dart';
 import 'package:mvvm_demo/domain/usecase/login_usecase.dart';
+import 'package:mvvm_demo/domain/usecase/register_usecase.dart';
 import 'package:mvvm_demo/presentation/forgot_password/forgot_password_viewmodel.dart';
 import 'package:mvvm_demo/presentation/login/login_viewmodel.dart';
+import 'package:mvvm_demo/presentation/register/register_viewmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final instance = GetIt.instance;
@@ -50,5 +52,14 @@ initForgotPasswordModule() async {
         () => ForgotPasswordUsecase(instance()));
     instance.registerFactory<ForgotPasswordViewModel>(
         () => ForgotPasswordViewModel(instance()));
+  }
+}
+
+initRegisterModule() async {
+  if (!GetIt.I.isRegistered<RegisterUsecase>()) {
+    instance
+        .registerFactory<RegisterUsecase>(() => RegisterUsecase(instance()));
+    instance.registerFactory<RegisterViewModel>(
+        () => RegisterViewModel(instance()));
   }
 }

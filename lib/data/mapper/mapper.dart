@@ -38,3 +38,9 @@ extension ForgotPasswordResponseMapper on ForgetPasswordResponse? {
     return this?.support ?? "";
   }
 }
+
+extension RegisterResponseMapper on RegisterResponse? {
+  Register toDomain() {
+    return Register(this?.customer.toDomain(), this?.contact.toDomain());
+  }
+}

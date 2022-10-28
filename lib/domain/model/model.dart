@@ -32,3 +32,9 @@ class DeviceInfo {
   String version;
   DeviceInfo(this.name, this.identifier, this.version);
 }
+
+class Register {
+  Customer? customer;
+  Contact? contact;
+  Register(this.customer, this.contact);
+}

@@ -41,3 +41,16 @@ String? validateEmail(String value) {
     }
   }
 }
+
+String? validatePassword(String value) {
+  RegExp regex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
+  if (value.isEmpty) {
+    return AppStrings.isPasswordEmpty;
+  } else {
+    if (!regex.hasMatch(value)) {
+      return AppStrings.passwordError;
+    } else {
+      return null;
+    }
+  }
+}

@@ -1,4 +1,6 @@
 // ignore: depend_on_referenced_packages
+import 'package:analyzer/dart/analysis/results.dart';
+import 'package:flutter/gestures.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'responses.g.dart';
 
@@ -70,4 +72,17 @@ class ForgetPasswordResponse extends BaseResponse {
       _$ForgetPasswordResponseFromJson(json);
   //to json
   Map<String, dynamic> toJson() => _$ForgetPasswordResponseToJson(this);
+}
+
+@JsonSerializable()
+class RegisterResponse extends BaseResponse {
+  @JsonKey(name: "customer")
+  CustomerResponse? customer;
+  @JsonKey(name: "contacts")
+  ContactResponse contact;
+  RegisterResponse(this.customer, this.contact);
+
+  factory RegisterResponse.fromJson(Map<String, dynamic> json) =>
+      _$RegisterResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$RegisterResponseToJson(this);
 }
