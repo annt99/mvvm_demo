@@ -14,7 +14,7 @@ class AppStrings {
       "Tut app is an awesome flutter application using clean architecture #4";
   static const String skip = "Skip";
   static const String username = "Username";
-  static const String email = "email";
+  static const String email = "Email";
   static const String usernameError = 'Email is valid';
   static const String password = "Password";
   static const String passwordError = 'Password must contain [A-Z][a-z][0-9]';
@@ -28,4 +28,12 @@ class AppStrings {
   static const String isPasswordEmpty = "Please enter password";
   static const String isEmailEmpty = "Please enter email";
   static const String resendTitle = "Didn't recive email ? Resend ";
+  static const String name = "Name";
+  static const String mobilePhone = "Mobile number";
+  static const String profilePicture = "Profile picture";
+  static const String register = "Register";
+  static const String alreadyAccount = "Already have an account ? Login";
+  static const String isNameEmpty = "Please enter name";
+  static const String isPhoneEmpty = "Please enter phone number";
+  static const String isPictureLink = "Please choose profile picture";
 }

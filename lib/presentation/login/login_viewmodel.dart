@@ -3,7 +3,6 @@
 import 'dart:async';
 
 import 'package:mvvm_demo/app/funtions.dart';
-import 'package:mvvm_demo/core/utils/string_manager.dart';
 import 'package:mvvm_demo/domain/usecase/login_usecase.dart';
 import 'package:mvvm_demo/presentation/base/base_viewmodel.dart';
 import 'package:mvvm_demo/presentation/common/freezed_data_classes.dart';
@@ -97,19 +96,6 @@ class LoginViewModel extends BaseViewModel
 
   _validate() {
     inputIsAllInput.add(null);
-  }
-
-  String? validatePassword(String value) {
-    RegExp regex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
-    if (value.isEmpty) {
-      return AppStrings.isPasswordEmpty;
-    } else {
-      if (!regex.hasMatch(value)) {
-        return AppStrings.passwordError;
-      } else {
-        return null;
-      }
-    }
   }
 
   bool _isPasswordValid(String password) {
