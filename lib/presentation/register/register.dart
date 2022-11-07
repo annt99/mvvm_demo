@@ -1,9 +1,7 @@
-import 'package:analyzer/file_system/file_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:mvvm_demo/app/app_prefs.dart';
 import 'package:mvvm_demo/app/di.dart';
 import 'package:mvvm_demo/core/route/route_manager.dart';
 import 'package:mvvm_demo/core/utils/color_manager.dart';
@@ -26,7 +24,6 @@ class _RegisterViewState extends State<RegisterView> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  TextEditingController _pictureController = TextEditingController();
   final _formKey = GlobalKey();
   final _picker = ImagePicker();
   _bind() {
@@ -168,9 +165,9 @@ class _RegisterViewState extends State<RegisterView> {
                   stream: _viewModel.outputIsProfilePictureValid,
                   builder: ((context, snapshot) {
                     return GestureDetector(
-                      onTap: (() async => await _getImage(context)),
+                      onTap: (() => _showPicker(context)),
                       child: TextFormField(
-                        controller: _pictureController,
+                        controller: TextEditingController(text: snapshot.data),
                         enabled: false,
                         keyboardType: TextInputType.text,
                         // obscureText: true,
@@ -180,8 +177,9 @@ class _RegisterViewState extends State<RegisterView> {
                             hintText: AppStrings.profilePicture,
                             labelText: AppStrings.profilePicture,
                             suffixIcon: const Icon(Icons.image),
-                            errorText:
-                                (snapshot.data == null) ? null : snapshot.data),
+                            errorText: (snapshot.data != null)
+                                ? null
+                                : AppStrings.isPictureLink),
                       ),
                     );
                   }),
@@ -206,11 +204,43 @@ class _RegisterViewState extends State<RegisterView> {
           ),
         ),
       ));
-  _getImage(BuildContext context) async {
+  _getImageGallery() async {
     var picture = await _picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _viewModel.setProfilePicture(picture!.path);
-      _pictureController = TextEditingController(text: picture.name);
-    });
+    if (picture != null) {
+      _viewModel.setProfilePicture(picture.name);
+    }
   }
+
+  _getImageCamera() async {
+    var picture = await _picker.pickImage(source: ImageSource.camera);
+    if (picture != null) {
+      _viewModel.setProfilePicture(picture.name);
+    }
+  }
+
+  _showPicker(BuildContext context) => showBottomSheet(
+      context: context,
+      builder: (context) => SafeArea(
+              child: Wrap(
+            children: [
+              ListTile(
+                trailing: const Icon(Icons.arrow_forward),
+                leading: const Icon(Icons.camera),
+                title: const Text(AppStrings.photoGallery),
+                onTap: () {
+                  _getImageGallery();
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                trailing: const Icon(Icons.arrow_forward),
+                leading: const Icon(Icons.camera_alt_rounded),
+                title: const Text(AppStrings.photoCamera),
+                onTap: () {
+                  _getImageCamera();
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          )));
 }

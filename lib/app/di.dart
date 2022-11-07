@@ -1,6 +1,7 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 import 'package:get_it/get_it.dart';
 import 'package:mvvm_demo/app/app_prefs.dart';
+import 'package:mvvm_demo/data/data_source/local_data_source.dart';
 import 'package:mvvm_demo/data/data_source/remote_data_source.dart';
 import 'package:mvvm_demo/data/network/app_api.dart';
 import 'package:mvvm_demo/data/network/dio_factory.dart';
@@ -8,10 +9,12 @@ import 'package:mvvm_demo/data/network/network_info.dart';
 import 'package:mvvm_demo/data/repository/repository_impl.dart';
 import 'package:mvvm_demo/domain/repository/repository.dart';
 import 'package:mvvm_demo/domain/usecase/forgot_password_usecase.dart';
+import 'package:mvvm_demo/domain/usecase/home_usecase.dart';
 import 'package:mvvm_demo/domain/usecase/login_usecase.dart';
 import 'package:mvvm_demo/domain/usecase/register_usecase.dart';
 import 'package:mvvm_demo/presentation/forgot_password/forgot_password_viewmodel.dart';
 import 'package:mvvm_demo/presentation/login/login_viewmodel.dart';
+import 'package:mvvm_demo/presentation/main/home/home_viewmodel.dart';
 import 'package:mvvm_demo/presentation/register/register_viewmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -34,9 +37,11 @@ Future<void> initAppModule() async {
   //remote data source
   instance.registerLazySingleton<RemoteDataSource>(
       () => RemoteDataSourceImpl(instance()));
+  //local data source
+  instance.registerLazySingleton<LocalDataSource>(() => LocalDataSourceImpl());
   //repository
   instance.registerLazySingleton<Repository>(
-      () => RepositoryImpl(instance(), instance()));
+      () => RepositoryImpl(instance(), instance(), instance()));
 }
 
 initLoginModule() async {
@@ -61,5 +66,12 @@ initRegisterModule() async {
         .registerFactory<RegisterUsecase>(() => RegisterUsecase(instance()));
     instance.registerFactory<RegisterViewModel>(
         () => RegisterViewModel(instance()));
+  }
+}
+
+initHomeModule() async {
+  if (!GetIt.I.isRegistered<HomeUsecase>()) {
+    instance.registerFactory<HomeUsecase>(() => HomeUsecase(instance()));
+    instance.registerFactory<HomeViewmodel>(() => HomeViewmodel(instance()));
   }
 }

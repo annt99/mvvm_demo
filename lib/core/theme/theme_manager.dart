@@ -22,9 +22,9 @@ ThemeData getApplicationTheme() {
       // appbar theme
       appBarTheme: AppBarTheme(
           centerTitle: true,
-          color: ColorManager.white,
-          // elevation: AppSize.s4,
-          elevation: 0,
+          color: ColorManager.primary,
+          elevation: AppSize.s4,
+          // elevation: 0,
           shadowColor: ColorManager.white,
           titleTextStyle: getRegularStyle(
               color: ColorManager.white, fontSize: FontSizeManager.s16)),
@@ -51,6 +51,10 @@ ThemeData getApplicationTheme() {
       textTheme: TextTheme(
           headline1: getSemiBoldStyle(
               color: ColorManager.darkGray, fontSize: FontSizeManager.s16),
+          headline2: getRegularStyle(
+              color: ColorManager.white, fontSize: FontSizeManager.s16),
+          headline3: getBoldStyle(
+              color: ColorManager.primary, fontSize: FontSizeManager.s18),
           subtitle1: getMediumStyle(
               color: ColorManager.lightGray, fontSize: FontSizeManager.s14),
           caption: getRegularStyle(color: ColorManager.gray1),

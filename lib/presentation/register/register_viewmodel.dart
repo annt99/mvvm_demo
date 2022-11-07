@@ -178,7 +178,7 @@ class RegisterViewModel extends BaseViewModel
   }
 
   _validPicture(String link) {
-    return link.isEmpty ? AppStrings.isPictureLink : null;
+    return link.isEmpty ? null : link;
   }
 
   _validNumberPhone(String number) {
@@ -190,9 +190,9 @@ class RegisterViewModel extends BaseViewModel
   }
 
   _isAllValueValid() {
-    return _validName(registerObject.name) &&
-        _validNumberPhone(registerObject.numberPhone) &&
-        _validPicture(registerObject.pictureLink) &&
+    return _validName(registerObject.name) == null &&
+        _validNumberPhone(registerObject.numberPhone) == null &&
+        _validPicture(registerObject.pictureLink) != null &&
         validateEmail(registerObject.email) == null &&
         validatePassword(registerObject.password) == null;
   }

@@ -7,7 +7,6 @@ import 'package:mvvm_demo/core/utils/string_manager.dart';
 import 'package:mvvm_demo/core/utils/value_manager.dart';
 import 'package:mvvm_demo/presentation/common/state_renderer/state_renderer_imp.dart';
 import 'package:mvvm_demo/presentation/forgot_password/forgot_password_viewmodel.dart';
-import 'package:mvvm_demo/presentation/login/login_viewmodel.dart';
 
 class ForgotPasswordView extends StatefulWidget {
   const ForgotPasswordView({super.key});

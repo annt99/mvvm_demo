@@ -36,4 +36,10 @@ class AppStrings {
   static const String isNameEmpty = "Please enter name";
   static const String isPhoneEmpty = "Please enter phone number";
   static const String isPictureLink = "Please choose profile picture";
+  static const String photoGallery = "Choose Image from Gallery";
+  static const String photoCamera = "Take a photo";
+  static const String home = "Home";
+  static const String search = "Search";
+  static const String notification = "Notifications";
+  static const String setting = "Settings";
 }

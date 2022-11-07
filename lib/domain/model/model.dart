@@ -38,3 +38,37 @@ class Register {
   Contact? contact;
   Register(this.customer, this.contact);
 }
+
+class Service {
+  int id;
+  String title;
+  String image;
+  Service(this.id, this.title, this.image);
+}
+
+class BannerAD {
+  int id;
+  String link;
+  String title;
+  String image;
+  BannerAD(this.id, this.link, this.title, this.image);
+}
+
+class Store {
+  int id;
+  String title;
+  String image;
+  Store(this.id, this.title, this.image);
+}
+
+class HomeData {
+  List<Service> services;
+  List<Store> stores;
+  List<BannerAD> banners;
+  HomeData(this.services, this.stores, this.banners);
+}
+
+class HomeObject {
+  HomeData data;
+  HomeObject(this.data);
+}

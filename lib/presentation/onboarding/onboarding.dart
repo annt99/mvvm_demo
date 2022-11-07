@@ -60,13 +60,6 @@ class OnboardingViewState extends State<OnboardingView> {
     } else {
       return Scaffold(
         backgroundColor: ColorManager.white,
-        appBar: AppBar(
-          backgroundColor: ColorManager.white,
-          systemOverlayStyle: SystemUiOverlayStyle(
-              statusBarColor: ColorManager.white,
-              statusBarBrightness: Brightness.dark,
-              statusBarIconBrightness: Brightness.dark),
-        ),
         body: PageView.builder(
           controller: _pageController,
           itemCount: sliderViewObject.numOfSlides,

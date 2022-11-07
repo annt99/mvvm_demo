@@ -1,3 +1,4 @@
+import 'package:mvvm_demo/data/data_source/local_data_source.dart';
 import 'package:mvvm_demo/data/data_source/remote_data_source.dart';
 import 'package:mvvm_demo/data/mapper/mapper.dart';
 import 'package:mvvm_demo/data/network/error_handler.dart';
@@ -10,8 +11,10 @@ import 'package:mvvm_demo/domain/repository/repository.dart';
 
 class RepositoryImpl extends Repository {
   final RemoteDataSource _remoteDataSource;
+  final LocalDataSource _localDataSource;
   final NetworkInfo _networkInfo;
-  RepositoryImpl(this._remoteDataSource, this._networkInfo);
+  RepositoryImpl(
+      this._remoteDataSource, this._localDataSource, this._networkInfo);
   @override
   Future<Either<Failure, Authentication>> login(
       LoginRequest loginRequest) async {
@@ -73,6 +76,31 @@ class RepositoryImpl extends Repository {
       }
     } else {
       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, HomeObject>> getHome() async {
+    try {
+      final res = await _localDataSource.getHome();
+      return Right(res.toDomain());
+    } catch (cacheError) {
+      if (await _networkInfo.isConnected) {
+        try {
+          final res = await _remoteDataSource.getHome();
+          if (res.status == ApiInternalStatus.SUCCESS) {
+            _localDataSource.saveHomeToCache(res);
+            return Right(res.toDomain());
+          } else {
+            return Left(Failure(res.status ?? ApiInternalStatus.FAILURE,
+                res.message ?? ResponseMessage.UNKNOWN));
+          }
+        } catch (error) {
+          return Left(ErrorHandler.handler(error).failure);
+        }
+      } else {
+        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+      }
     }
   }
 }
